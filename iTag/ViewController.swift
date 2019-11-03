@@ -22,8 +22,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         //Set up text display properties in highlightView
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 12
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19.0), NSAttributedString.Key.paragraphStyle : paragraphStyle]
+        paragraphStyle.lineSpacing = 8 
+        paragraphStyle.lineHeightMultiple = 1.5
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18.0), NSAttributedString.Key.paragraphStyle : paragraphStyle]
         
         if let content = tagModel.getCurrentDocumentText() {
             let displayString = NSMutableAttributedString(string: content, attributes: attributes)

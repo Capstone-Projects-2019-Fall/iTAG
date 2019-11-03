@@ -28,11 +28,19 @@ class TagModel {
         
     }
     
-    func getCurrentDocumentText() -> String?{
+    func getCurrentDocumentText() -> String? {
         return currentDocument?.content
+    }
+    
+    func getCurrentDocumentTitle() -> String? {
+        return currentDocument?.title
     }
     
     func getAnnotationRangesForCurrentDocument() -> [NSRange]?{
         return currentDocument?.annotations.map{ $0.range }
+    }
+    
+    func getCurrentDocumentAsJSONObject() -> String{
+        return "JSON DOOD"
     }
 }
