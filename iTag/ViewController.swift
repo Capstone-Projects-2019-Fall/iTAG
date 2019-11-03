@@ -11,8 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var highlightView: UITextView!
-    
-    var currentDocument : Document? = nil
+    let tagModel = TagModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,24 +19,31 @@ class ViewController: UIViewController, UITextViewDelegate {
         //SET UP higlightView
         highlightView.delegate = self
         
-        //Create Test Document
-        currentDocument = Document()
-        
         //Set up text display properties in highlightView
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19.0)]
-        let displayString = NSMutableAttributedString(string: currentDocument!.content, attributes: attributes)
         
-        highlightView.attributedText = displayString
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 12
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19.0), NSAttributedString.Key.paragraphStyle : paragraphStyle]
+        
+        if let content = tagModel.getCurrentDocumentText() {
+            let displayString = NSMutableAttributedString(string: content, attributes: attributes)
+            highlightView.attributedText = displayString
+        } else{
+            highlightView.text = "No document selected"
+            
+        }
     }
     
     
-    
     @IBAction func highlightButtonPressed(_ sender: UIButton) {
+        
         let selectedRange = highlightView.selectedRange
-        if selectedRange.length != 0 {
-            currentDocument?.addAnnotation(range: selectedRange)
-            print("Selected Range: \(selectedRange)")
+        
+        if (tagModel.addAnnotation(range: selectedRange)){
+            print("Added annotation for range: \(selectedRange)")
             drawHighlights()
+        } else{
+            print("Unable to add Annotation")
         }
     }
     
@@ -48,8 +54,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         let displayString = NSMutableAttributedString(attributedString: highlightView.attributedText)
         
         //loop the list of annotations, adding a highlight attribute for each one
-        currentDocument?.annotations.forEach {
-            displayString.addAttribute(.backgroundColor, value: UIColor.yellow, range: $0.range)
+        let highlightRanges = tagModel.getAnnotationRangesForCurrentDocument()
+        highlightRanges?.forEach {
+            displayString.addAttribute(.backgroundColor, value: UIColor.yellow, range: $0)
         }
         
         //Add the text to highlightView
