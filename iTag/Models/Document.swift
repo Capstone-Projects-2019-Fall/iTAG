@@ -8,20 +8,24 @@
 
 import Foundation
 
-class Document {
+class Document : Codable {
     var title : String
     var content : String
     var annotations : [Annotation]
     
     
     func addAnnotation(range: NSRange){
-        let annotationToAdd = Annotation(range: range)
+        let start = content.index(content.startIndex, offsetBy: range.lowerBound)
+        let end = content.index(start, offsetBy: range.length)
+        let text = String(content[start..<end])
+        let annotationToAdd = Annotation(range: range, text: text)
+        print(annotationToAdd)
         annotations.append(annotationToAdd)
     }
     
     
     
-    init(title : String, content: String) {
+    init(title : String, content: String){
         self.title = title
         self.content = content
         self.annotations = [Annotation]()
@@ -32,4 +36,16 @@ class Document {
         
         self.init( title: "Test Document", content: sampleContent)
     }
+    
+//    func getAnnotationsAsDictionary(){
+//        let annotations = [String, Any]
+//        annotations.forEach(){
+//            let start = $0.range.lowerBound
+//            let end = start + $0.range.length
+//            let text = "text to be extracted"
+//            let label = ["label" : "First Label"]
+//            let points = ["points" : ["start" : "\(start)", "end" : "\(end)", "text" : text]]
+//            let annotations = ["annotation" : [label, points]]
+//        }
+//    }
 }

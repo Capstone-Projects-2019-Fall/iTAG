@@ -63,6 +63,10 @@ class ViewController: UIViewController, UITextViewDelegate {
         //Add the text to highlightView
         highlightView.attributedText = displayString
     }
+    @IBAction func convertButtonPressed(_ sender: Any) {
+        print(tagModel.getCurrentDocumentAsJSONObject())
+        
+    }
     
 }
 

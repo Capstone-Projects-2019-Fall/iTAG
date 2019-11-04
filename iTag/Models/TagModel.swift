@@ -23,9 +23,9 @@ class TagModel {
     func addAnnotation(range: NSRange) -> Bool{
         if range.length != 0, let document = currentDocument {
             document.addAnnotation(range: range)
+            return true
         }
-        return range.length != 0
-        
+        return false
     }
     
     func getCurrentDocumentText() -> String? {
@@ -37,10 +37,12 @@ class TagModel {
     }
     
     func getAnnotationRangesForCurrentDocument() -> [NSRange]?{
-        return currentDocument?.annotations.map{ $0.range }
+        return currentDocument?.annotations.map{ NSRange(location: $0.start, length: $0.end - $0.start) }
     }
     
     func getCurrentDocumentAsJSONObject() -> String{
-        return "JSON DOOD"
+        let data = try! JSONEncoder().encode(currentDocument!)
+        let jsonString = String(data: data, encoding: .utf8)!
+        return jsonString
     }
 }
