@@ -14,11 +14,11 @@ class Document : Codable {
     var annotations : [Annotation]
     
     
-    func addAnnotation(range: NSRange){
+    func addAnnotation(range: NSRange, label: String){
         let start = content.index(content.startIndex, offsetBy: range.lowerBound)
         let end = content.index(start, offsetBy: range.length)
         let text = String(content[start..<end])
-        let annotationToAdd = Annotation(range: range, text: text)
+        let annotationToAdd = Annotation(range: range, text: text, label: label)
         print(annotationToAdd)
         annotations.append(annotationToAdd)
     }
@@ -37,15 +37,10 @@ class Document : Codable {
         self.init( title: "Test Document", content: sampleContent)
     }
     
-//    func getAnnotationsAsDictionary(){
-//        let annotations = [String, Any]
-//        annotations.forEach(){
-//            let start = $0.range.lowerBound
-//            let end = start + $0.range.length
-//            let text = "text to be extracted"
-//            let label = ["label" : "First Label"]
-//            let points = ["points" : ["start" : "\(start)", "end" : "\(end)", "text" : text]]
-//            let annotations = ["annotation" : [label, points]]
-//        }
-//    }
+    func changeLabelName(newName: String){
+        
+        annotations.forEach {   $0.changeLabelName(newLabelName: newName)   }
+        
+    }
+    
 }

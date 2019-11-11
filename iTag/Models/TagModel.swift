@@ -22,7 +22,7 @@ class TagModel {
     
     func addAnnotation(range: NSRange) -> Bool{
         if range.length != 0, let document = currentDocument {
-            document.addAnnotation(range: range)
+            document.addAnnotation(range: range, label: self.categories[0])
             return true
         }
         return false
@@ -30,6 +30,11 @@ class TagModel {
     
     func getCurrentDocumentText() -> String? {
         return currentDocument?.content
+    }
+    
+    func changeLabelName(newLabelName: String){
+        self.categories = [newLabelName]
+        currentDocument?.changeLabelName(newName: newLabelName)
     }
     
     func getCurrentDocumentTitle() -> String? {

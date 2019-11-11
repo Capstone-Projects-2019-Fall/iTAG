@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var highlightView: UITextView!
+    @IBOutlet weak var highlightButton: UIButton!
     let tagModel = TagModel()
     
     override func viewDidLoad() {
@@ -48,6 +49,24 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    @IBAction func highlightButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
+        
+        let alertController = UIAlertController(title: "Edit label", message: "Enter the label", preferredStyle: .alert)
+            alertController.addTextField(){ $0.placeholder = "Label: Name"}
+        let submit = UIAlertAction(title: "Change", style: .default) {
+            [unowned alertController] _ in
+            if let name = alertController.textFields![0].text{
+                self.highlightButton.setTitle(name, for: .normal)
+                self.tagModel.changeLabelName(newLabelName: name)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(submit)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
+    }
     
     
     func drawHighlights(){
@@ -63,9 +82,14 @@ class ViewController: UIViewController, UITextViewDelegate {
         //Add the text to highlightView
         highlightView.attributedText = displayString
     }
-    @IBAction func convertButtonPressed(_ sender: Any) {
-        print(tagModel.getCurrentDocumentAsJSONObject())
+    @IBAction func previewButtonPressed(_ sender: Any) {
+        let jsonText = tagModel.getCurrentDocumentAsJSONObject()
+        let alertController = UIAlertController(title: "Preview JSON", message: jsonText, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
         
+        print(tagModel.getCurrentDocumentAsJSONObject())
     }
     
 }

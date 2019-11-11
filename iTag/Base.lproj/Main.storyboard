@@ -26,22 +26,24 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSq-gq-8yM">
                                 <rect key="frame" x="45" y="699" width="324" height="33"/>
                                 <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Highlight">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
                                     <action selector="highlightButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wxx-ra-RpL"/>
+                                    <outletCollection property="gestureRecognizers" destination="6jg-s2-kYp" appends="YES" id="NsX-Bn-Hkn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nrj-s8-xjn">
                                 <rect key="frame" x="45" y="768" width="324" height="30"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Convert">
+                                <state key="normal" title="Preview JSON">
                                     <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="convertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vds-8i-yR6"/>
+                                    <action selector="previewButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vds-8i-yR6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -61,10 +63,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="highlightButton" destination="FSq-gq-8yM" id="AcO-A7-KGX"/>
                         <outlet property="highlightView" destination="K98-7H-Uv6" id="jGN-W6-RUr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="6jg-s2-kYp">
+                    <connections>
+                        <action selector="highlightButtonLongPressed:" destination="BYZ-38-t0r" id="xsF-KS-ru9"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="93.75"/>
         </scene>
