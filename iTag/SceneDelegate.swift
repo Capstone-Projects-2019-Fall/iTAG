@@ -17,6 +17,67 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        let tabController = UITabBarController()
+        
+        let highlightStoryboard = UIStoryboard(name:"Highlight", bundle: nil)
+        
+        let documentsStoryboard = UIStoryboard(name:"Documents", bundle: nil)
+                 
+        let labelsStoryboard = UIStoryboard(name: "Labels", bundle: nil)
+        
+        let documentsVC = documentsStoryboard.instantiateViewController(withIdentifier: "Documents") as! DocumentsViewController
+        
+        let highlightVC = highlightStoryboard.instantiateViewController(withIdentifier: "Highlight") as! HighlightViewController
+        
+        let labelsVC = labelsStoryboard.instantiateViewController(withIdentifier: "Labels") as! LabelsViewController
+        let vcData : [(UIViewController, UIImage, UIImage)] = [
+            
+            (highlightVC, UIImage(named: "highlightIcon")!, UIImage(named: "highlightSelectedIcon")!),
+            
+             (documentsVC, UIImage(named: "documentIcon")!, UIImage(named: "documentSelectedIcon")!),
+             
+             (labelsVC, UIImage(named: "labelIcon")!, UIImage(named: "labelSelectedIcon")!)
+             
+        ]
+        
+        let vcs = vcData.map{ (vc, defaultImage, selectedImage) -> UINavigationController in
+            
+            let nav = UINavigationController(rootViewController: vc)
+           
+            nav.tabBarItem.image = defaultImage
+            
+            nav.tabBarItem.selectedImage = selectedImage
+            
+            return nav
+            
+        }
+        
+        tabController.viewControllers = vcs
+        
+        tabController.tabBar.isTranslucent = false
+        
+        if let items = tabController.tabBar.items {
+            for item in items {
+                
+                if let image = item.image {
+                    
+                    item.image = image.withRenderingMode(.alwaysOriginal)
+                    
+                }
+                if let selectedImage = item.selectedImage {
+                    
+                    item.selectedImage = selectedImage.withRenderingMode(.alwaysOriginal)
+                    
+                }
+                
+                item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+            }
+        }
+        
+        UINavigationBar.appearance().backgroundColor = UIColor.white
+        
+        window?.rootViewController = tabController
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

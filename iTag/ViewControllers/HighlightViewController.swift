@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HighlightViewController.swift
 //  iTag
 //
 //  Created by Leo Vergnetti on 11/1/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextViewDelegate {
+class HighlightViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var highlightView: UITextView!
     @IBOutlet weak var highlightButton: UIButton!
