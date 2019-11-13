@@ -47,6 +47,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="30P-ou-LRe" firstAttribute="bottom" secondItem="lab-ze-WyD" secondAttribute="bottom" id="2Vm-Oo-znB"/>
                             <constraint firstItem="30P-ou-LRe" firstAttribute="trailing" secondItem="lab-ze-WyD" secondAttribute="trailing" id="LFv-71-zlD"/>

@@ -12,18 +12,14 @@ class HighlightViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var highlightView: UITextView!
     @IBOutlet weak var highlightButton: UIButton!
-    let tagModel = TagModel()
+    var tagModel = TagModel.sharedInstance
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //SET UP higlightView
-        highlightView.delegate = self
-        
+    fileprivate func loadCurrentDocument() {
         //Set up text display properties in highlightView
         
+        
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8 
+        paragraphStyle.lineSpacing = 8
         paragraphStyle.lineHeightMultiple = 1.5
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18.0), NSAttributedString.Key.paragraphStyle : paragraphStyle]
         
@@ -34,6 +30,14 @@ class HighlightViewController: UIViewController, UITextViewDelegate {
             highlightView.text = "No document selected"
             
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //SET UP higlightView
+        highlightView.delegate = self
+        loadCurrentDocument()
     }
     
     
@@ -49,6 +53,14 @@ class HighlightViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    @IBAction func userDidSwipe(_ sender: UISwipeGestureRecognizer) {
+        
+        if sender.state == .ended{
+            print("Swiped right")
+            TagModel.sharedInstance.nextDocument()
+            loadCurrentDocument()
+        }
+    }
     @IBAction func highlightButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         
         let alertController = UIAlertController(title: "Edit label", message: "Enter the label", preferredStyle: .alert)

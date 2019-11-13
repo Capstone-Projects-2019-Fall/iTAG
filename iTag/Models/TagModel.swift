@@ -10,13 +10,18 @@ import Foundation
 
 class TagModel {
     var openDocuments : [Document]
-    var currentDocument : Document?
+    var currentDocument : Document? {
+        return openDocuments[currentDocumentIndex]
+    }
+    var currentDocumentIndex : Int
     var categories : [String]
     
-    init(){
+    static let sharedInstance = TagModel()
+    private init(){
         let document = Document()
         self.openDocuments = [document]
-        self.currentDocument = document
+        self.currentDocumentIndex = 0
+//        self.currentDocument = document
         self.categories = ["Label"]
     }
     
@@ -28,8 +33,17 @@ class TagModel {
         return false
     }
     
+    func addDocument(document: Document) {
+        openDocuments.append(document)
+    }
+    
+    func nextDocument(){
+        currentDocumentIndex = (currentDocumentIndex + 1) % openDocuments.count
+        
+    }
+    
     func getCurrentDocumentText() -> String? {
-        return currentDocument?.content
+        return openDocuments[currentDocumentIndex].content
     }
     
     func changeLabelName(newLabelName: String){
